@@ -1,112 +1,161 @@
-import java.io.File;
 import java.nio.file.*;
 import java.util.Scanner;
 
 public class security {
-    public static String login() {
+
+    private static String validUsername;
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static String getUsername() {
+        return validUsername;
+    }
+
+    public static void login() {
         utils.clearScreen();
         System.out.println("Lets get you logged in.");
-        String[] userData = checkFile();
-        String[] checkedData = checkAccount(userData);
-        if (checkedData[0].equals("S")) {
-            System.out.println("Login successful! Welcome back, " + checkedData[1] + ".");
-        } else {
-            System.out.println("Login failed. Please enter your username and password.");
-            while (true) {
-                Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            String[] saved = checkFile();
+            String[] checked = checkAccount(saved);
+
+            if (checked[0].equals("S")) {
+                System.out.println("Login successful! Welcome back, " + checked[1] + ".");
+                return;
+            }
+
+            System.out.println("Login failed. No valid saved login found.");
+            System.out.println("Would you like to create a new account? (Y/N)");
+
+            String choice = scanner.nextLine().trim().toUpperCase();
+
+            if (choice.equals("Y")) {
+                newAccount();
+                continue; // restart login attempt
+            }
+
+            if (choice.equals("N")) {
                 System.out.print("Username: ");
                 String username = scanner.nextLine().trim();
+
                 System.out.print("Password: ");
                 String password = scanner.nextLine().trim();
                 String passwordHash = Integer.toString(password.hashCode());
-                System.out.println(passwordHash); // For testing purposes only
 
-                String[] attemptData = new String[]{username, passwordHash};
-                String[] attemptCheck = checkAccount(attemptData);
+                String[] attempt = { username, passwordHash };
+                String[] attemptCheck = checkAccount(attempt);
+
                 if (attemptCheck[0].equals("S")) {
                     System.out.println("Login successful! Welcome back, " + attemptCheck[1] + ".");
-                    return attemptCheck[1];
+                    return;
                 } else {
-                    System.out.println("Login failed. Please try again.");
+                    System.out.println("Login failed. Try again.");
                 }
             }
+
+            System.out.println("Invalid choice.");
         }
-        return checkedData[1];
     }
 
-    private static String[] checkFile(){
-        File saveDataFile = new File("Data/keys.csv");
-        File accountsFiles = new File("Data/accounts.csv");
-        if (!saveDataFile.exists()) {
-            try {
-                saveDataFile.createNewFile();
-            } catch (Exception e) {
-                System.out.println("An error occurred while creating the save data file.");
-            }
-        }
-        System.out.println("Checking saved login data...");
+    private static String[] checkFile() {
         try {
-            String line = Files.readString(saveDataFile.toPath()).trim();
-            if (line.isEmpty()) throw new Exception("Invalid User Data");
+            Files.createDirectories(Paths.get("Data")); // ensure folder exists
+        } catch (Exception ignored) {}
 
-            String[] parts = line.split(",", 2);
-            if (parts.length < 2) throw new Exception("Invalid User Data");
+        Path file = Paths.get("Data/keys.csv");
 
-            String[] userData = new String[]{ parts[0], parts[1] }; // username, password
-            return userData;
+        if (!Files.exists(file)) return new String[]{"", ""};
+
+        try {
+            String content = Files.readString(file).trim();
+            if (content.isEmpty()) return new String[]{"", ""};
+
+            String[] parts = content.split(",", 2);
+            if (parts.length < 2) return new String[]{"", ""};
+
+            return new String[] { parts[0], parts[1] };
         } catch (Exception e) {
-            System.out.println("An error occurred while reading the save data file.");
-            return new String[] {"", ""};
+            return new String[]{"", ""};
         }
     }
 
-    private static String[] checkAccount(String[] userData){
+    private static String[] checkAccount(String[] userData) {
         Path path = Paths.get("Data/accounts.csv");
-        if (!Files.exists(path)) {
-            System.out.println("Accounts file not found.");
-            return new String[] {"F", ""}; // Failed
-        }
+        if (!Files.exists(path)) return new String[]{"F", ""};
 
         try {
             for (String line : Files.readAllLines(path)) {
                 String[] parts = line.split(",", 2);
                 if (parts.length < 2) continue;
 
-                String storedUsername = parts[0].trim();
-                String storedPasswordHash = parts[1].trim();
+                if (parts[0].trim().equals(userData[0]) &&
+                    parts[1].trim().equals(userData[1])) {
 
-                if (storedUsername.equals(userData[0]) && storedPasswordHash.equals(userData[1])) {
-                    saveLoginData(storedUsername, storedPasswordHash);
-                    return new String[] {"S", storedUsername}; // Success
+                    saveLoginData(parts[0].trim(), parts[1].trim());
+                    return new String[]{"S", parts[0].trim()};
                 }
             }
         } catch (Exception e) {
-            System.out.println("An error occurred while reading the accounts file.");
-            return new String[] {"F", ""}; // Failed
+            return new String[]{"F", ""};
         }
-        return new String[] {"F", ""}; // Failed
+
+        return new String[]{"F", ""};
     }
 
-    private static void saveLoginData(String username, String passwordHash){
-        Path path = Paths.get("Data/keys.csv");
-        String dataToSave = username + "," + passwordHash;
+    private static void saveLoginData(String username, String passwordHash) {
+        validUsername = username;
+        Path file = Paths.get("Data/keys.csv");
+
         try {
-            Files.writeString(path, dataToSave);
-            System.out.println("Login data saved successfully.");
-        } catch (Exception e) {
-            System.out.println("An error occurred while saving the login data.");
-        }
+            Files.writeString(file, username + "," + passwordHash);
+        } catch (Exception ignored) {}
     }
 
     public static void clearLoginData(){
-        Path path = Paths.get("Data/keys.csv");
+        validUsername = null;
         try {
-            Files.deleteIfExists(path);
-            System.out.println("Login data cleared.");
-        } catch (Exception e) {
-            System.out.println("An error occurred while clearing the login data.");
+            Files.deleteIfExists(Paths.get("Data/keys.csv"));
+        } catch (Exception ignored) {}
+    }
+
+    public static void newAccount() {
+        utils.clearScreen();
+
+        System.out.println("Create a new account.");
+        System.out.print("Choose a username: ");
+        String username = scanner.nextLine().trim();
+
+        // Prevent duplicates
+        if (usernameExists(username)) {
+            System.out.println("Username already exists. Try another.");
+            return;
         }
+
+        System.out.print("Choose a password: ");
+        String password = scanner.nextLine().trim();
+        String passwordHash = Integer.toString(password.hashCode());
+
+        Path path = Paths.get("Data/accounts.csv");
+        String data = username + "," + passwordHash + "\n";
+
+        try {
+            Files.writeString(path, data, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+            System.out.println("Account created! You can now log in.");
+        } catch (Exception ignored) {}
+    }
+
+    private static boolean usernameExists(String username) {
+        Path path = Paths.get("Data/accounts.csv");
+        if (!Files.exists(path)) return false;
+
+        try {
+            for (String line : Files.readAllLines(path)) {
+                String[] parts = line.split(",", 2);
+                if (parts.length >= 1 && parts[0].trim().equals(username)) {
+                    return true;
+                }
+            }
+        } catch (Exception ignored) {}
+
+        return false;
     }
 }
-
-

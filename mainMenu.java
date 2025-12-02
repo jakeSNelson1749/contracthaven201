@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class mainMenu {
     public static void menu() {
         utils.clearScreen();
-        System.out.println("Welcome to Contact Haven!\n");
+        System.out.println("Welcome to Contact Haven, " + security.getUsername() + "!\n");
 
         //Print the jobs with the least amount of time? Or most reward? Maybe both in columns?
 
@@ -21,7 +21,8 @@ public class mainMenu {
             case "L":
                 utils.clearScreen();
                 security.clearLoginData();
-                String username = security.login();
+                security.login();
+                menu();
                 break;
             case "Q":
                 System.out.println("Thank you for using Contract Haven!");
