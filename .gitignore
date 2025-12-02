@@ -1,0 +1,9 @@
+# VS Code Settings
+.vscode/
+
+# File System Files
+.DS_Store
+Thumbs.db
+
+# Save User Login Locally Only
+Data/keys.csv

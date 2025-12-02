@@ -1,0 +1,2 @@
+startTime, endTime, userName, postTitle, postContent, postType, postReward
+2025-12-01T10:00:00,2026-01-01T12:00:00,"Bob Smith", "Learning Java", "I want help learning Java.", "Teaching", 150
