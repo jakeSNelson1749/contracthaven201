@@ -1,4 +1,5 @@
 import java.nio.file.*;
+import java.security.MessageDigest;
 import java.util.Scanner;
 
 public class security {
@@ -39,7 +40,7 @@ public class security {
 
                 System.out.print("Password: ");
                 String password = scanner.nextLine().trim();
-                String passwordHash = Integer.toString(password.hashCode());
+                String passwordHash = hashPassword(password);
 
                 String[] attempt = { username, passwordHash };
                 String[] attemptCheck = checkAccount(attempt);
@@ -132,7 +133,7 @@ public class security {
 
         System.out.print("Choose a password: ");
         String password = scanner.nextLine().trim();
-        String passwordHash = Integer.toString(password.hashCode());
+        String passwordHash = hashPassword(password);
 
         Path path = Paths.get("Data/accounts.csv");
         String data = username + "," + passwordHash + "\n";
@@ -157,5 +158,23 @@ public class security {
         } catch (Exception ignored) {}
 
         return false;
+    }
+
+    private static String hashPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(password.getBytes("UTF-8"));
+
+            // convert bytes → hex
+            StringBuilder hex = new StringBuilder();
+            for (byte b : hash) {
+                String hexByte = Integer.toHexString(0xff & b);
+                if (hexByte.length() == 1) hex.append('0');
+                hex.append(hexByte);
+            }
+            return hex.toString();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
