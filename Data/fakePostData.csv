@@ -1,2 +1,25 @@
-startTime, endTime, userName, postTitle, postContent, postType, postReward
-2025-12-01T10:00:00,2026-01-01T12:00:00,"Bob Smith", "Learning Java", "I want help learning Java.", "Teaching", 150
+userName, title, description, type, reward, startTime, endTime
+BobSmith, Java Tutoring, I want help learning Java.\nContact to set up time!, EDUCATION, 150, 2025-12-01T00:00, 2026-01-01T00:00
+newTVGuy, TV setup, I need someone to set up my new TV!, TECH, 50, 2025-12-01T00:00, 2026-01-01T00:00
+HandyHarry, Fence Repair, Need help fixing a loose fence panel\nTools provided, RENOVATION, 120, 2025-12-01T00:00, 2026-01-01T00:00
+GardenGal, Winter Planting, Looking for advice on preparing my garden for winter, ADVISING, 60, 2025-12-01T00:00, 2026-01-01T00:00
+FixItFrank, Gutter Cleaning, Need someone to clean gutters before snow hits, CLEANING, 80, 2025-12-01T00:00, 2026-01-01T00:00
+PetMom22, Dog Walking, Need daily dog walking while I recover from surgery, PET, 40, 2025-12-01T00:00, 2026-01-01T00:00
+CleanQueen, Garage Cleanup, Want help organizing and cleaning my garage, CLEANING, 100, 2025-12-01T00:00, 2026-01-01T00:00
+TutorTim, Algebra Tutor Needed, Looking for help passing algebra final\nEvenings preferred, EDUCATION, 75, 2025-12-01T00:00, 2026-01-01T00:00
+SeniorHelper, Grocery Run, Need assistance with weekly grocery trips, LABOR, 30, 2025-12-01T00:00, 2026-01-01T00:00
+TechBroMike, Printer Setup, I need help connecting my printer to WiFi, TECH, 35, 2025-12-01T00:00, 2026-01-01T00:00
+ArtKid97, Portrait Painting, Want someone to paint a portrait of my dog, ART, 200, 2025-12-01T00:00, 2026-01-01T00:00
+MoveDayGuy, Help Moving Boxes, Need help carrying boxes to new apartment, LABOR, 90, 2025-12-01T00:00, 2026-01-01T00:00
+HealthyHeidi, Nutrition Advice, Need basic diet advice for healthier meals, HEALTH, 50, 2025-12-01T00:00, 2026-01-01T00:00
+CraftyCarmen, Holiday Decorations, Need help putting up holiday lights, RENOVATION, 70, 2025-12-01T00:00, 2026-01-01T00:00
+RoboNerd, Laptop Cleanup, Need someone to optimize my laptop performance, TECH, 45, 2025-12-01T00:00, 2026-01-01T00:00
+ElderCareTom, Errand Help, Need help picking up prescriptions weekly, LABOR, 30, 2025-12-01T00:00, 2026-01-01T00:00
+PainterPaula, Bedroom Repaint, Need help repainting small bedroom, RENOVATION, 150, 2025-12-01T00:00, 2026-01-01T00:00
+TutorKate, Spanish Practice, Looking for casual Spanish conversation partner, EDUCATION, 40, 2025-12-01T00:00, 2026-01-01T00:00
+FixerFred, Shed Repair, Need help repairing leaky shed roof, RENOVATION, 180, 2025-12-01T00:00, 2026-01-01T00:00
+PetPal33, Cat Sitting, Need someone to visit my cats twice daily, PET, 55, 2025-12-01T00:00, 2026-01-01T00:00
+ArtFanSam, Mural Assistant, Looking for help painting small mural, ART, 120, 2025-12-01T00:00, 2026-01-01T00:00
+SweeperSue, Apartment Cleaning, Need help cleaning small apartment, CLEANING, 90, 2025-12-01T00:00, 2026-01-01T00:00
+TechDadDan, WiFi Troubleshooting, Need help improving home WiFi signal, TECH, 60, 2025-12-01T00:00, 2026-01-01T00:00
+YogaYana, Stretch Coaching, Want help developing stretching routine, HEALTH, 45, 2025-12-01T00:00, 2026-01-01T00:00

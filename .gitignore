@@ -7,3 +7,6 @@ Thumbs.db
 
 # Save User Login Locally Only
 Data/keys.csv
+
+#class files
+*.class
