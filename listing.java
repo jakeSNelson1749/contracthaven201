@@ -9,6 +9,7 @@ public class listing {
     private int value;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private String id;
 
     public listing(String accountName, String title, String description, listingTypes type, int value, LocalDateTime startTime, LocalDateTime endTime){
         this.accountName = accountName;
@@ -18,6 +19,7 @@ public class listing {
         this.value = value;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.id = utils.generateID();
     }
     
     //accessors / mutators
@@ -47,7 +49,7 @@ public class listing {
     @Override
     public String toString(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy 'at' h:mm a");
-        return "\n\t"+title+"\nOffered by: "+accountName+"\nCategory: "+type+"\n\n"+description+"\n\nReward: $"+value+"\n\nStart date: "+startTime.format(formatter)+"\nEnd date: "+endTime.format(formatter)+"\n";
+        return "\n\t"+title+"\nOffered by: "+accountName+"\nCategory: "+type+"\nID: "+id+"\n\n"+description+"\n\nReward: $"+value+"\n\nStart date: "+startTime.format(formatter)+"\nEnd date: "+endTime.format(formatter)+"\n";
     }
 
 

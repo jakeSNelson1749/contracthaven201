@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class mainMenu {
-    public static void menu() {
-        utils.clearScreen();
+    public static char menu() {
+        //utils.clearScreen();
         System.out.println("\nWelcome to Contact Haven, " + security.getUsername() + "!");
 
         //Print the jobs with the least amount of time? Or most reward? Maybe both in columns?
@@ -12,6 +12,19 @@ public class mainMenu {
 
         Scanner scanner = new Scanner(System.in);
         String choice = scanner.nextLine().toUpperCase();
+        boolean isValidChoice = false;
+        while(!isValidChoice){
+            if(choice.equals("V") || choice.equals("C")||choice.equals("M") || choice.equals("S")||choice.equals("L") || choice.equals("Q")){
+                isValidChoice = true;
+            }
+            else{
+                System.out.println("Invalid Choice!");
+                System.out.print("Enter selection: ");
+                choice = scanner.nextLine().toUpperCase();
+            }
+        }
+        return choice.charAt(0);
+        /* 
         switch (choice) {
             case "V":
                 //view job board
@@ -40,5 +53,6 @@ public class mainMenu {
             default:
                 menu();
         }
+        */
     }
 }

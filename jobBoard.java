@@ -4,13 +4,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.time.*;
 
-public abstract class jobBoard {
+public class jobBoard {
 
-
+    private static ArrayList<listing> allListings = new ArrayList<>(); //static instance var for changeable jobboard 
+    static{
+        loadListings("Data/fakePostData.csv");
+    }
+    //to prevent jobBoard objects
+    private jobBoard(){}
+    
     //PRE: name of file containing all stored listing information
     //POST: returns an arraylist of all listing objects
-    private static ArrayList<listing> loadListings(String inputPath){
-        ArrayList<listing> allListings = new ArrayList<>();
+    private static void loadListings(String inputPath){
+        //ArrayList<listing> allListings = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(new FileReader(inputPath));
             String line = br.readLine(); //remove header
@@ -27,13 +33,16 @@ public abstract class jobBoard {
                 allListings.add(new listing(tokens[0].trim(), tokens[1].trim(), tempDesc, tempType, tempReward, tempStart, tempEnd));
 
             }
+            br.close(); //close bufferedreader
         } catch (IOException e) {
             System.out.println("Something went wrong!");
         }
-        return allListings;
+        //return allListings;
     }
+    public static ArrayList<listing> getAllListings(){return allListings;}
+
     public static void printJobBoard(){
-        ArrayList<listing> allListings = loadListings("Data/fakePostData.csv");
+        ArrayList<listing> allListings = getAllListings();
         utils.clearScreen();
         System.out.println("Current Job Board:\n");
         for (listing l : allListings) {
@@ -41,4 +50,7 @@ public abstract class jobBoard {
             
         }
     }
+
+    //function to add new listing
+    //must add to static arraylist and csv file
 }
