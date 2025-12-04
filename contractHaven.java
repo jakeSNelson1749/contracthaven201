@@ -1,5 +1,8 @@
 public class contractHaven{
     public static void main(String[] args) {
-        //blueprint out contract hub
+        security.login();
+        // Username is now stored in security.getUsername() like this:
+        // String username = security.getUsername();
+        mainMenu.menu();
     }
 }
