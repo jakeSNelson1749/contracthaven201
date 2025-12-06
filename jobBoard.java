@@ -22,9 +22,12 @@ public class jobBoard {
             String line = br.readLine(); //remove header
             while((line = br.readLine()) != null){
                 String[] tokens = line.split(",");
+                if(tokens.length != 7){
+                    //invalid data
+                    continue;
+                }
 
                 //load listings arraylist from csv
-                //doesn't need to check for bad data, will only store accurate posts
                 listingTypes tempType = listingTypes.valueOf(tokens[3].trim());
                 int tempReward = Integer.valueOf(tokens[4].trim());
                 String tempDesc = tokens[2].trim().replace("\\n", "\n");
