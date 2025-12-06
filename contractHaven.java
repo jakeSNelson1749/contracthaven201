@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class contractHaven{
     public static void main(String[] args) {
         security.login();
@@ -5,20 +7,26 @@ public class contractHaven{
         // String username = security.getUsername();
         
         //main menu (V, C, M, S, L, Q)
-        char choice = mainMenu.menu();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to Contract Haven, " + security.getUsername() + "!");
+        char choice = mainMenu.menu(scanner);
         while(choice != 'Q'){
             switch (choice) {
                 case 'V':
                     //view job board
                     utils.clearScreen();
                     jobBoard.printJobBoard();
-                    System.out.println("\n");
-                    choice = mainMenu.menu();
+                    choice = mainMenu.menu(scanner);
                     break;
                 case 'C':
                     //create new listing
                     utils.clearScreen();
-                    //function to create new listing
+                    try {
+                        jobBoard.createListing(security.getUsername(), scanner);
+                    } catch (Exception e) {
+                        System.out.println("input file not found - something went wrong!");
+                    }
+                    choice = mainMenu.menu(scanner);
                     break;
                 case 'M':
                     //access account
@@ -31,15 +39,16 @@ public class contractHaven{
                     utils.clearScreen();
                     security.clearLoginData();
                     security.login();
-                    choice = mainMenu.menu();
+                    choice = mainMenu.menu(scanner);
                     break;
                 case 'Q':
                     //quit
                     System.out.println("Thank you for using Contract Haven!");
                     System.exit(0);
                 default:
-                    System.out.println("Error: mainMenu invalid choice");
+                    System.out.println("Error: mainMenu invalid choice - something went wrong!");
             }
         }
+        scanner.close();
     }
 }

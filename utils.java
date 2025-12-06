@@ -23,4 +23,16 @@ public class utils {
         }
         return id;
     }
+    //PRE: take String input
+    //POST: return int value, -1 if invalid
+    public static int convertToInteger(String input){
+        input = input.trim();
+        int value = -1;
+        try {
+            value = Integer.parseInt(input);
+        } catch (Exception e) {
+            //non integer value passed as input
+        }
+        return value;
+    }
 }

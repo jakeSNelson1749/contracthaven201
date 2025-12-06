@@ -20,7 +20,7 @@ public class security {
             String[] checked = checkAccount(saved);
 
             if (checked[0].equals("S")) {
-                System.out.println("Login successful! Welcome back, " + checked[1] + ".");
+                System.out.println("Login successful! Welcome back, " + checked[1] + ".\n");
                 return;
             }
 
@@ -46,7 +46,7 @@ public class security {
                 String[] attemptCheck = checkAccount(attempt);
 
                 if (attemptCheck[0].equals("S")) {
-                    System.out.println("Login successful! Welcome back, " + attemptCheck[1] + ".");
+                    System.out.println("Login successful! Welcome back, " + attemptCheck[1] + ".\n");
                     return;
                 } else {
                     System.out.println("Login failed. Try again.");

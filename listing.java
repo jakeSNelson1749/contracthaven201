@@ -49,7 +49,10 @@ public class listing {
     @Override
     public String toString(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy 'at' h:mm a");
-        return "\n\t"+title+"\nOffered by: "+accountName+"\nCategory: "+type+"\nID: "+id+"\n\n"+description+"\n\nReward: $"+value+"\n\nStart date: "+startTime.format(formatter)+"\nEnd date: "+endTime.format(formatter)+"\n";
+        return "\n\t"+title+"\nOffered by: "+accountName+"\nCategory: "+type+"\nID: "+id+"\n\nDescription: "+description+"\n\nReward: $"+value+"\n\nStart date: "+startTime.format(formatter)+"\nEnd date: "+endTime.format(formatter)+"\n";
+    }
+    public String toCSV(){
+        return accountName + ","+title+","+description+","+type+","+value+","+startTime+","+endTime;
     }
 
 
