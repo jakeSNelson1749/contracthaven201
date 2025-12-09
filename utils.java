@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -60,11 +59,13 @@ public class utils {
                 if(tokens.length == 8){
                     if(tokens[7].equals(ID)){
                         //ID not unique
+                        br.close();
                         return false;
                     }
                 }
                 else{
                     //missing ID entirely
+                    br.close();
                     return true;
                 }
             }
