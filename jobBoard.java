@@ -22,7 +22,7 @@ public class jobBoard {
             String line = br.readLine(); //remove header
             while((line = br.readLine()) != null){
                 String[] tokens = line.split(",");
-                if(tokens.length != 7){
+                if(tokens.length != 8){
                     //invalid data
                     continue;
                 }
@@ -33,7 +33,7 @@ public class jobBoard {
                 String tempDesc = tokens[2].trim().replace("\\n", "\n");
                 LocalDateTime tempStart = LocalDateTime.parse(tokens[5].trim());
                 LocalDateTime tempEnd = LocalDateTime.parse(tokens[6].trim());
-                allListings.add(new listing(tokens[0].trim(), tokens[1].trim(), tempDesc, tempType, tempReward, tempStart, tempEnd));
+                allListings.add(new listing(tokens[0].trim(), tokens[1].trim(), tempDesc, tempType, tempReward, tempStart, tempEnd, tokens[7].trim()));
 
             }
             br.close(); //close bufferedreader
@@ -42,8 +42,11 @@ public class jobBoard {
         }
         //return allListings;
     }
+    //getter for allListings
     public static ArrayList<listing> getAllListings(){return allListings;}
 
+
+    //prints full job board
     public static void printJobBoard(){
         ArrayList<listing> allListings = getAllListings();
         utils.clearScreen();
@@ -55,11 +58,9 @@ public class jobBoard {
     }
 
     //function to add new listing
-    //must add to static arraylist and csv file
     public static void createListing(String accountName, Scanner input) throws IOException{
-        //need from user: title, desc, type, reward, when it goes active, when it expires
+        //get from user: title, desc, type, reward, when it goes active, when it expires
         //username from main file
-
 
         PrintWriter csvWriter = new PrintWriter(new FileWriter("Data/fakePostData.csv", true));
         //Scanner input = new Scanner(System.in);
@@ -86,6 +87,8 @@ public class jobBoard {
         //getting desc
         System.out.println("\nGive us a short description:");
         String desc = input.nextLine();
+        //find commas
+        desc.replaceAll(",","");
 
         //getting positive, integer reward
         System.out.print("\nHow much will this job pay? $");
@@ -102,7 +105,7 @@ public class jobBoard {
         LocalDateTime endTime = LocalDateTime.parse("2026-01-01T00:00");
 
         //create listing object
-        listing temp = new listing(accountName, title, desc, type, value, startTime, endTime);
+        listing temp = new listing(accountName, title, desc, type, value, startTime, endTime,null);
         allListings.add(temp);
         csvWriter.println(temp.toCSV());
         System.out.println("\nListing added! Preview:");

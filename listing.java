@@ -11,7 +11,7 @@ public class listing {
     private LocalDateTime endTime;
     private String id;
 
-    public listing(String accountName, String title, String description, listingTypes type, int value, LocalDateTime startTime, LocalDateTime endTime){
+    public listing(String accountName, String title, String description, listingTypes type, int value, LocalDateTime startTime, LocalDateTime endTime, String id){
         this.accountName = accountName;
         this.description = description;
         this.title = title;
@@ -19,7 +19,12 @@ public class listing {
         this.value = value;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.id = utils.generateID();
+        if(id != null){
+            this.id = id;
+        }
+        else{
+            this.id = utils.generateID();
+        }
     }
     
     //accessors / mutators
@@ -30,6 +35,7 @@ public class listing {
     public int getValue(){return value;}
     public LocalDateTime getStartTime(){return startTime;}
     public LocalDateTime getEndTime(){return endTime;}
+    public String getID(){return id;}
 
 
     public void setAccountName(String newName){this.accountName = newName;}
@@ -52,7 +58,7 @@ public class listing {
         return "\n\t"+title+"\nOffered by: "+accountName+"\nCategory: "+type+"\nID: "+id+"\n\nDescription: "+description+"\n\nReward: $"+value+"\n\nStart date: "+startTime.format(formatter)+"\nEnd date: "+endTime.format(formatter)+"\n";
     }
     public String toCSV(){
-        return accountName + ","+title+","+description+","+type+","+value+","+startTime+","+endTime;
+        return accountName + ","+title+","+description+","+type+","+value+","+startTime+","+endTime+","+id;
     }
 
 

@@ -53,23 +53,23 @@ public class notification {
         return notifs;
     }
 
-    public static void createQuestion(String jobUUID, String message){
+    public static void createQuestion(String jobID, String message){
         String username = security.getUsername();
         String action = "question";
         String uuid = utils.generateUUID();
-        writeNotification(username, action, uuid, jobUUID, message);
+        writeNotification(username, action, uuid, jobID, message);
     }
 
-    public static void acceptJob(String jobUUID){
+    public static void acceptJob(String jobID){
         String username = security.getUsername();
         String action = "accept";
         String uuid = utils.generateUUID();
-        updateJobStatus(jobUUID);
-        writeNotification(username, action, uuid, jobUUID, "Job accepted by user.");
+        updateJobStatus(jobID);
+        writeNotification(username, action, uuid, jobID, "Job accepted by user.");
         
     }
 
-    private static void updateJobStatus(String jobUUID) {
+    private static void updateJobStatus(String jobID) {
         Path path = Path.of("Data/fakePostData.csv");
 
         try {
@@ -79,7 +79,7 @@ public class notification {
                 String line = lines.get(i);
                 String[] parts = line.split(",");
 
-                if (parts.length > 7 && parts[7].strip().equals(jobUUID)) {
+                if (parts.length > 7 && parts[7].strip().equals(jobID)) {
 
                     // Example update: set column 8 (index 8) to current time
                     String newTimestamp = LocalDateTime.now()
@@ -104,10 +104,10 @@ public class notification {
     }
 
 
-    private static void writeNotification(String username, String action, String uuid, String jobUUID, String message){
+    private static void writeNotification(String username, String action, String uuid, String jobID, String message){
         // Create a new line with the notification details
         Path path = Path.of("Data/notifications.csv");
-        String line = username + "," + message + "," + action + "," + utils.timestamp() + "," + jobUUID + "," + uuid + "\n";
+        String line = username + "," + message + "," + action + "," + utils.timestamp() + "," + jobID + "," + uuid + "\n";
         try {
             Files.writeString(path, line, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
         } catch (Exception e) {

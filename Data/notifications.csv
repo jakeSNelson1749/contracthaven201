@@ -1,1 +1,1 @@
-userName, message, action, timestamp, jobUUID, messageUUID
+userName, message, action, timestamp, jobID, messageUUID

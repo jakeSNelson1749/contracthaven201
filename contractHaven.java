@@ -8,8 +8,10 @@ public class contractHaven{
         
         //main menu (V, C, M, S, L, Q)
         Scanner scanner = new Scanner(System.in);
+        
         System.out.println("Welcome to Contract Haven, " + security.getUsername() + "!");
         char choice = mainMenu.menu(scanner);
+        //while loop terminates on Q
         while(choice != 'Q'){
             switch (choice) {
                 case 'V':
@@ -26,6 +28,7 @@ public class contractHaven{
                     } catch (Exception e) {
                         System.out.println("input file not found - something went wrong!");
                     }
+                    //update for different menu here
                     choice = mainMenu.menu(scanner);
                     break;
                 case 'M':
@@ -33,6 +36,8 @@ public class contractHaven{
                     break;
                 case 'S':
                     //search
+                    utils.clearScreen();
+                    choice = searchMenuActions(scanner);
                     break;
                 case 'L':
                     //logout
@@ -41,14 +46,43 @@ public class contractHaven{
                     security.login();
                     choice = mainMenu.menu(scanner);
                     break;
-                case 'Q':
-                    //quit
-                    System.out.println("Thank you for using Contract Haven!");
-                    System.exit(0);
                 default:
                     System.out.println("Error: mainMenu invalid choice - something went wrong!");
             }
         }
+        //q as input
         scanner.close();
+        System.out.println("Thank you for using Contract Haven!");
+        System.exit(0);
+    }
+    public static char searchMenuActions(Scanner scanner){
+        char choice = mainMenu.searchMenu(scanner);
+        //options are A, L, B, Q
+        //while loop terminates on B
+        while(choice != 'B'){
+            switch (choice) {
+                case 'A':
+                    //search for account
+                    System.out.println("seraching for account...");
+                    choice = mainMenu.searchMenu(scanner);
+                    break;
+                case 'L':
+                    //search for listing
+                    System.out.println("seraching for lsiting...");
+                    choice = mainMenu.searchMenu(scanner);
+                    break;
+                case 'Q':
+                    //quit the program
+                    System.out.println("Thank you for using Contract Haven!");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Error: searchMenu invalid choice - something went wrong!");
+            }
+    
+        }
+        //user inputs B, returns to main menu
+        utils.clearScreen();
+        return mainMenu.menu(scanner);
     }
 }

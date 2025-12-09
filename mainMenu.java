@@ -24,4 +24,23 @@ public class mainMenu {
         }
         return choice.charAt(0);
     }
+    public static char searchMenu(Scanner scanner){
+        System.out.print("\n[A]ccount search\n[L]isting search\n[B]ack\n[Q]uit\n\n");
+        System.out.print("Enter selection: ");
+
+        //Scanner scanner = new Scanner(System.in);
+        String choice = scanner.nextLine().toUpperCase();
+        boolean isValidChoice = false;
+        while(!isValidChoice){
+            if(choice.equals("A") || choice.equals("L")||choice.equals("B") || choice.equals("Q")){
+                isValidChoice = true;
+            }
+            else{
+                System.out.println("Invalid Choice!");
+                System.out.print("Enter selection: ");
+                choice = scanner.nextLine().toUpperCase();
+            }
+        }
+        return choice.charAt(0);
+    }
 }
