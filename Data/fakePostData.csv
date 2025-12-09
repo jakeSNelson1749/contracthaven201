@@ -1,4 +1,4 @@
-userName, title, description, type, reward, startTime, endTime
+userName, title, description, type, reward, startTime, endTime, uuid
 BobSmith, Java Tutoring, I want help learning Java.\nContact to set up time!, EDUCATION, 150, 2025-12-01T00:00, 2026-01-01T00:00
 newTVGuy, TV setup, I need someone to set up my new TV!, TECH, 50, 2025-12-01T00:00, 2026-01-01T00:00
 HandyHarry, Fence Repair, Need help fixing a loose fence panel\nTools provided, RENOVATION, 120, 2025-12-01T00:00, 2026-01-01T00:00

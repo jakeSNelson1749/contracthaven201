@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 public class utils {
@@ -34,5 +36,19 @@ public class utils {
             //non integer value passed as input
         }
         return value;
+    }
+
+    public static String generateUUID(){
+        return java.util.UUID.randomUUID().toString();
+    }
+
+    public static String timestamp(){
+        return LocalDateTime.now().toString();
+    }
+
+    public static String getTime(String raw){
+        LocalDateTime time = LocalDateTime.parse(raw);
+
+        return time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 }
