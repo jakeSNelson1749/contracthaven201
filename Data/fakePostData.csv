@@ -1,8 +1,7 @@
 userName, title, description, type, reward, startTime, endTime, id
 BobSmith,Java Tutoring,I want help learning Java.Contact to set up time!,EDUCATION,150,2025-12-01T00:00,2026-01-01T00:00,NtRppR
 newTVGuy,TV setup,I need someone to set up my new TV!,TECH,50,2025-12-01T00:00,2026-01-01T00:00,JKAewb
-HandyHarry,Fence Repair,Need help fixing a loose fence panel
-Tools provided,RENOVATION,120,2025-12-01T00:00,2026-01-01T00:00,yWkNZG
+HandyHarry,Fence Repair,Need help fixing a loose fence panel tools provided,RENOVATION,120,2025-12-01T00:00,2026-01-01T00:00,yWkNZG
 GardenGal,Winter Planting,Looking for advice on preparing my garden for winter,ADVISING,60,2025-12-01T00:00,2026-01-01T00:00,IKPHWg
 FixItFrank,Gutter Cleaning,Need someone to clean gutters before snow hits,CLEANING,80,2025-12-01T00:00,2026-01-01T00:00,BaNGnt
 PetMom22,Dog Walking,Need daily dog walking while I recover from surgery,PET,40,2025-12-01T00:00,2026-01-01T00:00,rKuGvf
