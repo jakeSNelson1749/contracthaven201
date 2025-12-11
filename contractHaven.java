@@ -1,7 +1,4 @@
 import java.util.Scanner;
-
-import javax.management.Notification;
-
 import java.util.ArrayList;
 
 public class contractHaven{
@@ -82,12 +79,12 @@ public class contractHaven{
             switch (choice) {
                 case 'A':
                     //search for account
-                    System.out.println("seraching for account...");
+                    System.out.println("searching for account...");
                     choice = mainMenu.searchMenu(scanner);
                     break;
                 case 'L':
                     //search for listing
-                    System.out.println("seraching for lsiting...");
+                    System.out.println("searching for listing...");
                     choice = mainMenu.searchMenu(scanner);
                     break;
                 case 'Q':
@@ -205,7 +202,8 @@ public class contractHaven{
                 case 'F':
                     //filter jobboard
                     //filter by type
-                    
+                    System.out.println("Here is where we'd add the ability to filter!");
+                    choice = mainMenu.jobBoardMenu(scanner);
                     break;
                 case 'Q':
                     //quit the program
