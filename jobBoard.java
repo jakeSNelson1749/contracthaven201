@@ -16,7 +16,6 @@ public class jobBoard {
     //PRE: name of file containing all stored listing information
     //POST: returns an arraylist of all listing objects
     private static void loadListings(String inputPath){
-        //ArrayList<listing> allListings = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(new FileReader(inputPath));
             String line = br.readLine(); //remove header
@@ -40,7 +39,6 @@ public class jobBoard {
         } catch (IOException e) {
             System.out.println("Something went wrong!");
         }
-        //return allListings;
     }
     //getter for allListings
     public static ArrayList<listing> getAllListings(){return allListings;}
@@ -58,7 +56,7 @@ public class jobBoard {
     }
 
     //function to add new listing
-    public static void createListing(String accountName, Scanner input) throws IOException{
+    public static void createListing(account myAccount, String accountName, Scanner input) throws IOException{
         //get from user: title, desc, type, reward, when it goes active, when it expires
         //username from main file
 
@@ -110,7 +108,7 @@ public class jobBoard {
         csvWriter.println(temp.toCSV());
         System.out.println("\nListing added! Preview:");
         System.out.println(temp);
-
+        myAccount.addListingID(temp.getID());
 
         //input.close();
         csvWriter.close();

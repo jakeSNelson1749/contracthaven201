@@ -1,9 +1,14 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class utils {
     public static void clearScreen() {
@@ -89,5 +94,80 @@ public class utils {
         LocalDateTime time = LocalDateTime.parse(raw);
 
         return time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+    }
+    public static void updateCSV(String fileName, String newLine, String removeID){
+        try {
+            File temp = new File(fileName + ".tmp");
+            PrintWriter writer = new PrintWriter(temp);
+            BufferedReader br = new BufferedReader(new FileReader("Data/accounts.csv"));
+            String line;
+            while((line = br.readLine()) != null){
+                if(!line.contains(removeID)){
+                    //skip line
+                    writer.println(line);
+                }
+            }
+            writer.println(newLine);
+            writer.close();
+            br.close(); //close bufferedreader
+
+            // Replace original file
+            new File(fileName).delete();
+            temp.renameTo(new File(fileName));
+        } catch (IOException e) {
+            System.out.println("Something went wrong!");
+        }
+    }
+    public static void removeFromCSV(String fileName, String removeID){
+        try {
+            File temp = new File(fileName + ".tmp");
+            PrintWriter writer = new PrintWriter(temp);
+            BufferedReader br = new BufferedReader(new FileReader("Data/accounts.csv"));
+            String line = br.readLine(); //remove header
+            while((line = br.readLine()) != null){
+                if(!line.contains(removeID)){
+                    //skip line
+                    writer.println(line);
+                }
+            }
+            writer.close();
+            br.close(); //close bufferedreader
+
+            // Replace original file
+            new File(fileName).delete();
+            temp.renameTo(new File(fileName));
+        } catch (IOException e) {
+            System.out.println("Something went wrong!");
+        }
+    }
+    public static ArrayList<account> loadAccountList(){
+        ArrayList<account> accountList = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("Data/accounts.csv"));
+            String line = br.readLine(); //remove header
+            while((line = br.readLine()) != null){
+                String[] tokens = line.split(",");
+                //0 is username, 1 is password, 2 is listingIDs, 3 is friendNames
+                ArrayList<String> friends;
+                ArrayList<String> ids;
+                if(!tokens[2].equals("")){
+                    ids = new ArrayList<>(Arrays.asList(tokens[2].split(" ")));
+                }
+                else{
+                    ids = new ArrayList<>();
+                }
+                if(!tokens[3].equals("")){
+                    friends = new ArrayList<>(Arrays.asList(tokens[3].split(" ")));
+                }
+                else{
+                    friends = new ArrayList<>();
+                }
+                accountList.add(new account(tokens[0].trim(), tokens[1].trim(),ids, friends));
+            }
+            br.close(); //close bufferedreader
+        } catch (IOException e) {
+            System.out.println("Something went wrong!");
+        }
+        return accountList;
     }
 }

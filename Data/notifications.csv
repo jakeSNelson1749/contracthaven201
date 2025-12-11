@@ -1,1 +1,4 @@
-userName, message, action, timestamp, jobID, messageUUID
+messageUser, userName, message, action, timestamp, jobID, messageUUID
+jnelson,temp,Job accepted by user.,accept,2025-12-10T21:14:51.033809,mrPdaA,5e2bdfe7-3343-48b0-9156-a4c3e1e65a40
+jnelson,temp,Job accepted by user.,accept,2025-12-10T21:15:52.374324,mrPdaA,9c4951a9-684a-4ade-8d98-696c2f6bd617
+YogaYana,jnelson,Job accepted by user.,accept,2025-12-10T23:30:40.937739,ZPdpQS,5e22f9ab-e728-4718-8694-b3e12508490b

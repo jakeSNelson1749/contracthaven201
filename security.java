@@ -10,6 +10,10 @@ public class security {
     public static String getUsername() {
         return validUsername;
     }
+    public static void setUsername(String newName){
+        validUsername = newName;
+    }
+
 
     public static void login() {
         utils.clearScreen();
@@ -70,22 +74,25 @@ public class security {
             String content = Files.readString(file).trim();
             if (content.isEmpty()) return new String[]{"", ""};
 
-            String[] parts = content.split(",", 2);
-            if (parts.length < 2) return new String[]{"", ""};
+            //String[] parts = content.split(",", 2);
+            String[] parts = content.split(",");
 
+            if (parts.length < 2) return new String[]{"", ""};
+            
             return new String[] { parts[0], parts[1] };
         } catch (Exception e) {
             return new String[]{"", ""};
         }
     }
 
-    private static String[] checkAccount(String[] userData) {
+    public static String[] checkAccount(String[] userData) {
         Path path = Paths.get("Data/accounts.csv");
         if (!Files.exists(path)) return new String[]{"F", ""};
 
         try {
             for (String line : Files.readAllLines(path)) {
-                String[] parts = line.split(",", 2);
+                //String[] parts = line.split(",", 2);
+                String[] parts = line.split(",");
                 if (parts.length < 2) continue;
 
                 if (parts[0].trim().equals(userData[0]) &&
@@ -136,7 +143,7 @@ public class security {
         String passwordHash = hashPassword(password);
 
         Path path = Paths.get("Data/accounts.csv");
-        String data = username + "," + passwordHash + "\n";
+        String data = username + "," + passwordHash + ", , \n";
 
         try {
             Files.writeString(path, data, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
@@ -150,7 +157,9 @@ public class security {
 
         try {
             for (String line : Files.readAllLines(path)) {
-                String[] parts = line.split(",", 2);
+                //String[] parts = line.split(",", 2);
+                String[] parts = line.split(",");
+
                 if (parts.length >= 1 && parts[0].trim().equals(username)) {
                     return true;
                 }
@@ -160,7 +169,7 @@ public class security {
         return false;
     }
 
-    private static String hashPassword(String password) {
+    public static String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(password.getBytes("UTF-8"));

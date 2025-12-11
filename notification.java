@@ -7,21 +7,22 @@ import java.util.List;
 
 public class notification {
 
+    //checks posts, and if posts have notifications than it shows them
     public static String getNotifications(){
         String notifs = "";
         List<String> ids = new ArrayList<>();
         List<String> names = new ArrayList<>();
         List<String> rawNotifs = new ArrayList<>();
-        String username = security.getUsername();
         Path posts = Path.of("Data/fakePostData.csv");
         try {
             List<String> lines = Files.readAllLines(posts);
             for (String line : lines){
-                if(line.split(",")[0].strip().equals(username)){
-                    ids.add(line.split(",")[7].strip());
-                    names.add(line.split(",")[1].strip());
+                String[] tokens = line.split(",");
+                if(tokens[0].equals(security.getUsername().trim())){
+                    ids.add(tokens[7].strip());
+                    names.add(tokens[1].strip());
+                }
             }
-        }
         } catch (Exception e) {
             System.out.println("Failed to read posts! " + e.getMessage());
         }
@@ -30,7 +31,8 @@ public class notification {
             List<String> lines = Files.readAllLines(notifPath);
             for(String id : ids){
                 for(String line: lines){
-                    if (id.equals(line.split(",")[4].strip())){
+                    String[] tokens2 = line.split(",");
+                    if (id.equals(tokens2[5].strip())){
                         rawNotifs.add(line);
                     }
                 }
@@ -40,12 +42,12 @@ public class notification {
         }
         int x = 0;
         for (String line : rawNotifs) {
-            switch (line.split(",")[2].strip()){
-                case ("question"):
-                    notifs += utils.getTime(line.split(",")[3].strip()) + " " + line.split(",")[0].strip() + " has accepted " + names.get(x) + "!\n";
-                    break;
+            switch (line.split(",")[3].strip()){
                 case ("accept"):
-                    notifs += utils.getTime(line.split(",")[3].strip()) + " " + line.split(",")[0].strip() + " has asked a question about " + names.get(x) + ": " + line.split(",")[1].strip() + "\n";
+                    notifs += utils.getTime(line.split(",")[4].strip()) + " " + line.split(",")[1].strip() + " has accepted " + ids.get(x) + "!\n";
+                    break;
+                case ("question"):
+                    notifs += utils.getTime(line.split(",")[4].strip()) + " " + line.split(",")[1].strip() + " has asked a question about " + ids.get(x) + ": " + line.split(",")[2].strip() + "\n";
                     break;
             }
             x++;
@@ -53,19 +55,19 @@ public class notification {
         return notifs;
     }
 
-    public static void createQuestion(String jobID, String message){
+    public static void createQuestion(String postAccountname, String jobID, String message){
         String username = security.getUsername();
         String action = "question";
         String uuid = utils.generateUUID();
-        writeNotification(username, action, uuid, jobID, message);
+        writeNotification(postAccountname, username, action, uuid, jobID, message);
     }
 
-    public static void acceptJob(String jobID){
+    public static void acceptJob(String postAccountname, String jobID){
         String username = security.getUsername();
         String action = "accept";
         String uuid = utils.generateUUID();
         updateJobStatus(jobID);
-        writeNotification(username, action, uuid, jobID, "Job accepted by user.");
+        writeNotification(postAccountname, username, action, uuid, jobID, "Job accepted by user.");
         
     }
 
@@ -104,10 +106,10 @@ public class notification {
     }
 
 
-    private static void writeNotification(String username, String action, String uuid, String jobID, String message){
+    private static void writeNotification(String username1, String username2, String action, String uuid, String jobID, String message){
         // Create a new line with the notification details
         Path path = Path.of("Data/notifications.csv");
-        String line = username + "," + message + "," + action + "," + utils.timestamp() + "," + jobID + "," + uuid + "\n";
+        String line = username1+","+username2+ "," + message + "," + action + "," + utils.timestamp() + "," + jobID + "," + uuid + "\n";
         try {
             Files.writeString(path, line, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
         } catch (Exception e) {
