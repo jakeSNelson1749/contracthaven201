@@ -8,17 +8,20 @@ import java.util.List;
 public class notification {
 
     //checks posts, and if posts have notifications than it shows them
-    public static String getNotifications(){
+
+    
+   public static String getNotifications(){
         String notifs = "";
         List<String> ids = new ArrayList<>();
         List<String> names = new ArrayList<>();
         List<String> rawNotifs = new ArrayList<>();
         Path posts = Path.of("Data/fakePostData.csv");
+
         try {
             List<String> lines = Files.readAllLines(posts);
             for (String line : lines){
                 String[] tokens = line.split(",");
-                if(tokens[0].equals(security.getUsername().trim())){
+                if(tokens[0].trim().equals(security.getUsername().trim())){
                     ids.add(tokens[7].strip());
                     names.add(tokens[1].strip());
                 }
@@ -26,6 +29,7 @@ public class notification {
         } catch (Exception e) {
             System.out.println("Failed to read posts! " + e.getMessage());
         }
+
         Path notifPath = Path.of("Data/notifications.csv");
         try {
             List<String> lines = Files.readAllLines(notifPath);
@@ -40,20 +44,27 @@ public class notification {
         } catch (Exception e) {
             System.out.println("Failed to read notifications! " + e.getMessage());
         }
-        int x = 0;
+
         for (String line : rawNotifs) {
-            switch (line.split(",")[3].strip()){
-                case ("accept"):
-                    notifs += utils.getTime(line.split(",")[4].strip()) + " " + line.split(",")[1].strip() + " has accepted " + ids.get(x) + "!\n";
+            String[] parts = line.split(",");
+            String type      = parts[3].strip();
+            String time      = utils.getTime(parts[4].strip());
+            String username2 = parts[1].strip();
+            String notifId   = parts[5].strip();  
+
+            switch (type){
+                case "accept":
+                    notifs += time + " " + username2 + " has accepted " + notifId + "!\n";
                     break;
-                case ("question"):
-                    notifs += utils.getTime(line.split(",")[4].strip()) + " " + line.split(",")[1].strip() + " has asked a question about " + ids.get(x) + ": " + line.split(",")[2].strip() + "\n";
+                case "question":
+                    notifs += time + " " + username2 + " has asked a question about " + notifId + ": " + parts[2].strip() + "\n";
                     break;
             }
-            x++;
         }
+
         return notifs;
     }
+
 
     public static void createQuestion(String postAccountname, String jobID, String message){
         String username = security.getUsername();
